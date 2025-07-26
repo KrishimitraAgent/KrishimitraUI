@@ -10,30 +10,33 @@ options:
 steps:
   # 1. Build Docker image
   - name: gcr.io/cloud-builders/docker
-    args: [
-      'build',
-      '-t',
-      '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE}:${SHORT_SHA}',
-      '.'
-    ]
+    args:
+      [
+        'build',
+        '-t',
+        '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE}:${SHORT_SHA}',
+        '.'
+      ]
 
   # 2. Push Docker image to Artifact Registry
   - name: gcr.io/cloud-builders/docker
-    args: [
-      'push',
-      '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE}:${SHORT_SHA}'
-    ]
+    args:
+      [
+        'push',
+        '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE}:${SHORT_SHA}'
+      ]
 
-  # 3. Deploy to Cloud Run
+  # 3. Deploy to Cloud Run (allow public access)
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk
     entrypoint: gcloud
-    args: [
-      "run", "deploy", "${_SERVICE}",
-      "--image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE}:${SHORT_SHA}",
-      "--region=${_REGION}",
-      "--platform=managed",
-      "--allow-unauthenticated"
-    ]
+    args:
+      [
+        "run", "deploy", "${_SERVICE}",
+        "--image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE}:${SHORT_SHA}",
+        "--region=${_REGION}",
+        "--platform=managed",
+        "--allow-unauthenticated"
+      ]
 
 images:
-  - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMA
+  - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE}:${SHORT_SHA}'
