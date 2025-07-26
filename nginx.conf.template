@@ -1,5 +1,5 @@
 server {
-  listen 8080;
+  listen ${PORT};
   server_name _;
 
   root /usr/share/nginx/html;
@@ -15,4 +15,11 @@ server {
     expires 1y;
     add_header Cache-Control "public, immutable";
   }
-}
+
+  # Health check endpoint for Cloud Run
+  location /health {
+    access_log off;
+    return 200 "healthy\n";
+    add_header Content-Type text/plain;
+  }
+} 

@@ -35,7 +35,13 @@ steps:
         "--image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE}:${SHORT_SHA}",
         "--region=${_REGION}",
         "--platform=managed",
-        "--allow-unauthenticated"
+        "--allow-unauthenticated",
+        "--port=8080",
+        "--memory=512Mi",
+        "--cpu=1",
+        "--timeout=300",
+        "--max-instances=10",
+        "--set-env-vars=NODE_ENV=production"
       ]
 
 images:

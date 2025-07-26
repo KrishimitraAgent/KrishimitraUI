@@ -32,9 +32,14 @@ RUN adduser -D -H -u 1001 appuser \
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Custom Nginx config for SPA + $PORT=8080
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy nginx template and startup script
+COPY nginx.conf.template /etc/nginx/conf.d/default.conf.template
+COPY start-nginx.sh /usr/local/bin/start-nginx.sh
+
+# Make startup script executable and set default PORT
+RUN chmod +x /usr/local/bin/start-nginx.sh
+ENV PORT=8080
 
 USER appuser
 EXPOSE 8080
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["/usr/local/bin/start-nginx.sh"]
