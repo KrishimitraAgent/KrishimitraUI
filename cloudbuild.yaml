@@ -4,6 +4,9 @@ substitutions:
   _IMAGE: react-ui
   _SERVICE: krishi-react-ui
 
+options:
+  logging: CLOUD_LOGGING_ONLY
+  
 steps:
   - name: gcr.io/cloud-builders/docker
     args: [
