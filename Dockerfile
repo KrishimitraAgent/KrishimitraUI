@@ -17,7 +17,7 @@ FROM nginx:1.27-alpine
 
 # Remove default nginx static assets & copy the build
 RUN rm -rf /usr/share/nginx/html/*
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /app/dist /usr/share/nginx/html
 
 # (Optional) Custom nginx config for SPA routing (uncomment COPY below and include nginx.conf)
 # COPY nginx.conf /etc/nginx/conf.d/default.conf
