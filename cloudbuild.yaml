@@ -24,11 +24,14 @@ steps:
 
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk
     entrypoint: gcloud
-    args: [
-      'run', 'deploy', '${_SERVICE}',
-      '--image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE}:${SHORT_SHA}',
-      '--region=${_REGION}', '--platform=managed', '--allow-unauthenticated'
+    args:
+    [
+      "run", "services", "add-iam-policy-binding", "${_SERVICE}",
+      "--region=${_REGION}",
+      "--member=allUsers",
+      "--role=roles/run.invoker"
     ]
+
 
 images:
   - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE}:${SHORT_SHA}'
