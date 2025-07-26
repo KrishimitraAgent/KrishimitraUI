@@ -3,7 +3,7 @@ substitutions:
   _REPO: krishi-mitra
   _IMAGE: react-ui
   _SERVICE: krishi-react-ui
-
+  
 options:
   logging: CLOUD_LOGGING_ONLY
 
